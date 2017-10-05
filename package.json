@@ -1,0 +1,8 @@
+{
+  "name": "ads-pt-api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:DevNebulae/ads-pt-api.git",
+  "author": "Ivo Huntjens <gamerkeeperson@gmail.com>",
+  "license": "MIT"
+}
