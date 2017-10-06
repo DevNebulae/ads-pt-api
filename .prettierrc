@@ -3,4 +3,3 @@ semi: false
 singleQuote: false
 trailingComma: none
 bracketSpacing: true
-parser: babylon
