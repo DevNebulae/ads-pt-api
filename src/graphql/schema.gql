@@ -1,0 +1,21 @@
+type Transaction {
+	ts: String,
+	buyingPrice: Int,
+	buyingCompleted: Int,
+	sellingPrice: Int,
+	sellingCompleted: Int,
+	overallPrice: Int,
+	overallCompleted: Int
+}
+
+type Item {
+	id: Int,
+	name: String,
+	store: Int,
+	transactions: [Transaction]
+}
+
+type Query {
+	items(ids: [Int]): [Item]
+	item(id: Int!): Item
+}
