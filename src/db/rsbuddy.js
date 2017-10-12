@@ -1,8 +1,9 @@
-import { Schema } from "mongoose"
+import mongoose, { Schema } from "mongoose"
 
-export const RSBuddy = new Schema({
+export const rsbuddy = new Schema({
   ts: {
-    type: String
+    type: String,
+    required: true
   },
   buyingPrice: {
     type: Number

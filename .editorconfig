@@ -18,7 +18,7 @@ indent_style = space
 indent_style = ignore
 insert_final_newline = ignore
 
-[**.{js,purs}]
+[**.{js,purs,gql,graphql}]
 tab_width = 2
 
 # Makefiles always use tabs for indentation

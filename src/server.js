@@ -1,30 +1,29 @@
 import express from "express"
-import cors from "cors"
+import graphqlHTTP from "express-graphql"
 import { graphqlExpress, graphiqlExpress } from "graphql-server-express"
 import bodyParser from "body-parser"
-import { MongoClient } from "mongodb"
+import mongoose, { Schema } from "mongoose"
+import schema from "./graphql"
+import Item from "./db/item"
 
-import schema from "./schema"
+// Constants
+const HTTP_PORT = 7700
 
-const MONGO_URL = "mongodb://localhost:27017/rsbuddy"
-const PORT = 7700
+let currentApp = null
 const app = express()
 
-app.use(
-  "*",
-  cors({
-    origin: "http://localhost:8000"
-  })
-)
+mongoose.Promise = global.Promise
+mongoose.connect("mongodb://localhost:27017/runescape", {
+  useMongoClient: true
+})
 
 app.use(
   "/graphql",
-  bodyParser.json(),
-  graphqlExpress(async () => ({
-    schema,
-    context: {
-      database: await MongoClient.connect(MONGO_URL)
-    }
+  bodyParser.json({
+    limit: "15mb"
+  }),
+  graphqlExpress(() => ({
+    schema
   }))
 )
 
@@ -35,4 +34,16 @@ app.use(
   })
 )
 
-export { app, MONGO_URL, PORT }
+app.listen(HTTP_PORT, () => {
+  console.log(`GraphQL-server listening on port ${HTTP_PORT}.`)
+})
+
+if (module.hot) {
+  module.hot.accept(["./server", "./graphql"], () => {
+    server.removeListener("request", currentApp)
+    server.on("request", app)
+    currentApp = app
+  })
+}
+
+export { app, HTTP_PORT }
