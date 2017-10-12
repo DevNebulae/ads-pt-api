@@ -77,9 +77,8 @@ const Query = new GraphQLObjectType({
           type: GraphQLBoolean
         }
       },
-      resolve: (root, { id, ids, empty }) => {
-        if (id) return Item.findOne({ id }, { rsbuddy: false })
-        else if (ids) return Item.find({ id: { $in: ids } }, { rsbuddy: false })
+      resolve: (root, { ids, empty }) => {
+        if (ids) return Item.find({ id: { $in: ids } }, { rsbuddy: false })
         else if (empty)
           return Item.find({ rsbuddy: { $eq: [] } }, { rsbuddy: false })
         else return Item.find({}, { rsbuddy: false })
@@ -192,22 +191,22 @@ const Mutation = new GraphQLObjectType({
           )
         },
         buyingPrice: {
-          type: new GraphQLNonNull(new GraphQLList(GraphQLInt))
+          type: new GraphQLNonNull(new GraphQLList(GraphQLString))
         },
         buyingCompleted: {
-          type: new GraphQLNonNull(new GraphQLList(GraphQLInt))
+          type: new GraphQLNonNull(new GraphQLList(GraphQLString))
         },
         sellingPrice: {
-          type: new GraphQLNonNull(new GraphQLList(GraphQLInt))
+          type: new GraphQLNonNull(new GraphQLList(GraphQLString))
         },
         sellingCompleted: {
-          type: new GraphQLNonNull(new GraphQLList(GraphQLInt))
+          type: new GraphQLNonNull(new GraphQLList(GraphQLString))
         },
         overallPrice: {
-          type: new GraphQLNonNull(new GraphQLList(GraphQLInt))
+          type: new GraphQLNonNull(new GraphQLList(GraphQLString))
         },
         overallCompleted: {
-          type: new GraphQLNonNull(new GraphQLList(GraphQLInt))
+          type: new GraphQLNonNull(new GraphQLList(GraphQLString))
         }
       },
       resolve: async (

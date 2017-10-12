@@ -6,21 +6,27 @@ export const rsbuddy = new Schema({
     required: true
   },
   buyingPrice: {
-    type: Number
+    type: Number,
+    min: 0
   },
   buyingCompleted: {
-    type: Number
+    type: Number,
+    min: 0
   },
   sellingPrice: {
-    type: Number
+    type: Number,
+    min: 0
   },
   sellingCompleted: {
-    type: Number
+    type: Number,
+    min: 0
   },
   overallPrice: {
-    type: Number
+    type: Number,
+    min: 0
   },
   overallCompleted: {
-    type: Number
+    type: Number,
+    min: 0
   }
 })
