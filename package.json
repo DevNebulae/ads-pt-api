@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "webpack",
     "dev:nodemon":
-      "nodemon --exec babel-node src/server.js --presets env,stage-0"
+      "nodemon --exec babel-node --max-old-space-size=2048 src/server.js --presets env,stage-0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
