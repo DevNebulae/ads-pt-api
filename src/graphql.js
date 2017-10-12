@@ -1,4 +1,5 @@
 import {
+  GraphQLBoolean,
   GraphQLInt,
   GraphQLList,
   GraphQLObjectType,
@@ -68,11 +69,19 @@ const Query = new GraphQLObjectType({
       args: {
         id: {
           type: GraphQLInt
+        },
+        ids: {
+          type: new GraphQLList(GraphQLInt)
+        },
+        empty: {
+          type: GraphQLBoolean
         }
       },
-      resolve: (root, { id, ids }) => {
+      resolve: (root, { id, ids, empty }) => {
         if (id) return Item.findOne({ id }, { rsbuddy: false })
         else if (ids) return Item.find({ id: { $in: ids } }, { rsbuddy: false })
+        else if (empty)
+          return Item.find({ rsbuddy: { $eq: [] } }, { rsbuddy: false })
         else return Item.find({}, { rsbuddy: false })
       }
     }
