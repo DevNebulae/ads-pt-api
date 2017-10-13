@@ -9,72 +9,9 @@ import {
 } from "graphql"
 import _ from "lodash"
 import Item from "./db/item"
+import ItemType from "./graphql/types/item"
 import Update from "./db/update"
-
-const RSBuddyType = new GraphQLObjectType({
-  name: "RSBuddy",
-  description: "Financial data retrieved from the RSBuddy/OSBuddy API",
-  fields: () => ({
-    ts: {
-      type: GraphQLString
-    },
-    buyingPrice: {
-      type: GraphQLInt
-    },
-    buyingCompleted: {
-      type: GraphQLInt
-    },
-    sellingPrice: {
-      type: GraphQLInt
-    },
-    sellingCompleted: {
-      type: GraphQLInt
-    },
-    overallPrice: {
-      type: GraphQLInt
-    },
-    overallCompleted: {
-      type: GraphQLInt
-    }
-  }),
-  resolve: root => Item.findOne({ id: root.id }, { rsbuddy: true })
-})
-
-const ItemType = new GraphQLObjectType({
-  name: "Item",
-  description:
-    "A representation of an in-game item and all of its in-game transactions from multiple sources.",
-  fields: {
-    id: {
-      type: GraphQLInt
-    },
-    name: {
-      type: GraphQLString
-    },
-    store: {
-      type: GraphQLInt
-    },
-    rsbuddy: {
-      type: new GraphQLList(RSBuddyType)
-    }
-  }
-})
-
-const UpdateType = new GraphQLObjectType({
-	name: "Update",
-	description: "...",
-	fields: {
-		name: {
-			type: GraphQLString
-		},
-		date: {
-			type: GraphQLString
-		},
-		content: {
-			type: GraphQLString
-		}
-	}
-})
+import UpdateType from "./graphql/types/update"
 
 const Query = new GraphQLObjectType({
   name: "RuneScape",
@@ -97,11 +34,11 @@ const Query = new GraphQLObjectType({
           return Item.find({ rsbuddy: { $eq: [] } }, { rsbuddy: false })
         else return Item.find({}, { rsbuddy: false })
       }
-		},
-		updates: {
-			type: new GraphQLList(UpdateType),
-			resolve: (root) => Update.find()
-		}
+    },
+    updates: {
+      type: new GraphQLList(UpdateType),
+      resolve: root => Update.find()
+    }
   }
 })
 
@@ -268,22 +205,23 @@ const Mutation = new GraphQLObjectType({
         )
         return Item.update({ id }, { rsbuddy: zipped })
       }
-		},
-		addUpdate: {
-			type: UpdateType,
-			args: {
-				name: {
-					type: new GraphQLNonNull(GraphQLString)
-				},
-				date: {
-					type: new GraphQLNonNull(GraphQLString)
-				},
-				content: {
-					type: new GraphQLNonNull(GraphQLString)
-				}
-			},
-			resolve: (root, {name, date, content}) => Update.create({name, date: new Date(date), content})
-		}
+    },
+    addUpdate: {
+      type: UpdateType,
+      args: {
+        title: {
+          type: new GraphQLNonNull(GraphQLString)
+        },
+        date: {
+          type: new GraphQLNonNull(GraphQLString)
+        },
+        content: {
+          type: new GraphQLNonNull(GraphQLString)
+        }
+      },
+      resolve: (root, { title, date, content }) =>
+        Update.create({ title, date: Date.parse(date), content })
+    }
   }
 })
 
