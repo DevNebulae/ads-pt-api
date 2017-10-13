@@ -84,9 +84,6 @@ const Query = new GraphQLObjectType({
     items: {
       type: new GraphQLList(ItemType),
       args: {
-        id: {
-          type: GraphQLInt
-        },
         ids: {
           type: new GraphQLList(GraphQLInt)
         },
@@ -100,7 +97,11 @@ const Query = new GraphQLObjectType({
           return Item.find({ rsbuddy: { $eq: [] } }, { rsbuddy: false })
         else return Item.find({}, { rsbuddy: false })
       }
-    }
+		},
+		updates: {
+			type: new GraphQLList(UpdateType),
+			resolve: (root) => Update.find()
+		}
   }
 })
 
