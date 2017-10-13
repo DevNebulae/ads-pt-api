@@ -7,7 +7,7 @@ import schema from "./graphql"
 import Item from "./db/item"
 
 // Constants
-const HTTP_PORT = 7700
+const HTTP_PORT = 80
 
 let currentApp = null
 const app = express()
