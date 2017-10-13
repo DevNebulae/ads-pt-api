@@ -59,6 +59,22 @@ const ItemType = new GraphQLObjectType({
   }
 })
 
+const UpdateType = new GraphQLObjectType({
+	name: "Update",
+	description: "...",
+	fields: {
+		name: {
+			type: GraphQLString
+		},
+		date: {
+			type: GraphQLString
+		},
+		content: {
+			type: GraphQLString
+		}
+	}
+})
+
 const Query = new GraphQLObjectType({
   name: "RuneScape",
   description:
@@ -250,7 +266,22 @@ const Mutation = new GraphQLObjectType({
         )
         return Item.update({ id }, { rsbuddy: zipped })
       }
-    }
+		},
+		addUpdate: {
+			type: UpdateType,
+			args: {
+				name: {
+					type: new GraphQLNonNull(GraphQLString)
+				},
+				date: {
+					type: new GraphQLNonNull(GraphQLString)
+				},
+				content: {
+					type: new GraphQLNonNull(GraphQLString)
+				}
+			},
+			resolve: (root, {name, date, content}) => Update.create({name, date, content})
+		}
   }
 })
 
