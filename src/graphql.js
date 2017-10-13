@@ -280,7 +280,7 @@ const Mutation = new GraphQLObjectType({
 					type: new GraphQLNonNull(GraphQLString)
 				}
 			},
-			resolve: (root, {name, date, content}) => Update.create({name, date, content})
+			resolve: (root, {name, date, content}) => Update.create({name, date: new Date(date), content})
 		}
   }
 })
