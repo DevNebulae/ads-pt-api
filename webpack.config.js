@@ -14,6 +14,10 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.(graphql|gql)?$/,
+        use: "raw-loader"
+      },
+      {
         exclude: /node_modules/,
         test: /\.js?$/,
         use: [
@@ -28,8 +32,8 @@ module.exports = {
         ]
       },
       {
-        test: /\.(graphql|gql)?$/,
-        use: "raw-loader"
+        test: /\.y(a?)ml$/,
+        use: ["json-loader", "yaml-loader"]
       }
     ]
   },
