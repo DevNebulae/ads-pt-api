@@ -7,15 +7,17 @@ import schema from "./graphql"
 import Item from "./db/item"
 
 // Constants
-const HTTP_PORT = 80
+const CONFIG = require("./settings.yaml")
 
-let currentApp = null
 const app = express()
 
 mongoose.Promise = global.Promise
-mongoose.connect("mongodb://localhost:27017/runescape", {
-  useMongoClient: true
-})
+mongoose.connect(
+  `mongodb://${CONFIG.mongo.url}:${CONFIG.mongo.port}/${CONFIG.mongo.database}`,
+  {
+    useMongoClient: true
+  }
+)
 
 app.use(
   "/graphql",
@@ -34,16 +36,4 @@ app.use(
   })
 )
 
-app.listen(HTTP_PORT, () => {
-  console.log(`GraphQL-server listening on port ${HTTP_PORT}.`)
-})
-
-if (module.hot) {
-  module.hot.accept(["./server", "./graphql"], () => {
-    server.removeListener("request", currentApp)
-    server.on("request", app)
-    currentApp = app
-  })
-}
-
-export { app, HTTP_PORT }
+export { app, CONFIG }
