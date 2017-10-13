@@ -9,6 +9,7 @@ import {
 } from "graphql"
 import _ from "lodash"
 import Item from "./db/item"
+import Update from "./db/update"
 
 const RSBuddyType = new GraphQLObjectType({
   name: "RSBuddy",
