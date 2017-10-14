@@ -9,7 +9,8 @@ const item = new Schema({
   },
   name: {
     type: String,
-    required: true
+    required: true,
+    index: true
   },
   store: {
     type: Number,
