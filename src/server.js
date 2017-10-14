@@ -13,7 +13,7 @@ const app = express()
 
 mongoose.Promise = global.Promise
 mongoose.connect(
-  `mongodb://${CONFIG.mongo.url}:${CONFIG.mongo.port}/${CONFIG.mongo.database}`,
+  `mongodb://${CONFIG.mongodb.url}:${CONFIG.mongodb.port}/${CONFIG.mongodb.database}`,
   {
     useMongoClient: true
   }
