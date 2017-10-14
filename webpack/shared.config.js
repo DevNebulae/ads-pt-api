@@ -19,10 +19,7 @@ module.exports = {
         test: /\.js?$/,
         use: [
           {
-            loader: "babel-loader",
-            options: {
-              babelrc: true
-            }
+            loader: "babel-loader"
           }
         ]
       },
