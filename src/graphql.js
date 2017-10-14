@@ -1,4 +1,4 @@
-import Item from "./../../db/item"
+import Item from "./db/item"
 import {default as ItemType} from "./graphql/types/item"
 import { makeExecutableSchema } from 'graphql-tools';
 import Update from "./graphql/types/update"
