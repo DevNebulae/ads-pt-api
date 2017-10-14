@@ -1,7 +1,7 @@
 import http from "http"
 import { app, CONFIG } from "./server"
 
-let currentApp = null
+let currentApp = app
 const server = http.createServer(app)
 server.listen(CONFIG.port)
 console.log(`GraphQL-server listening on port ${CONFIG.port}.`)
