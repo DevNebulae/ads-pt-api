@@ -1,0 +1,12 @@
+{
+  "presets": [
+    [
+      "env",
+      {
+        "module": false
+      }
+    ],
+    "stage-0"
+  ],
+  "plugins": ["transform-regenerator", "transform-runtime"]
+}
