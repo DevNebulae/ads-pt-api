@@ -1,4 +1,5 @@
 import Item from "./graphql/types/item"
+import Update from "./graphql/types/update"
 import { makeExecutableSchema } from "graphql-tools"
 
 const RuneScapeQuery = `
