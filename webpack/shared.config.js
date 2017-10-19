@@ -35,8 +35,10 @@ module.exports = {
   },
   output: { path: dist, filename: "server.js" },
   plugins: [
-		new CleanWebpackPlugin(dist),
-		new webpack.IgnorePlugin(/vertx/),
+    new CleanWebpackPlugin(dist, {
+      root: process.cwd()
+    }),
+    new webpack.IgnorePlugin(/vertx/),
     new webpack.NamedModulesPlugin(),
     new webpack.NoEmitOnErrorsPlugin()
   ],
