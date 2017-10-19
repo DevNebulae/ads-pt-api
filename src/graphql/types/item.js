@@ -1,29 +1,16 @@
-import {
-  GraphQLInt,
-  GraphQLList,
-  GraphQLObjectType,
-  GraphQLString
-} from "graphql"
-import RSBuddyType from "./rsbuddy"
+import RSBuddy from "./rsbuddy"
 
-const ItemType = new GraphQLObjectType({
-  name: "Item",
-  description:
-    "A representation of an in-game item and all of its in-game transactions from multiple sources.",
-  fields: {
-    id: {
-      type: GraphQLInt
-    },
-    name: {
-      type: GraphQLString
-    },
-    store: {
-      type: GraphQLInt
-    },
-    rsbuddy: {
-      type: new GraphQLList(RSBuddyType)
-    }
-  }
-})
+const Item = `
+	# A representation of a RuneScape in-game item. Added to
+	# the general information and knowledge of an item are
+	# the transactions retrieved from the OSBuddy / RSBuddy
+	# client.
+	type Item {
+		id: Int
+		name: String
+		store: Int
+		rsbuddy: [RSBuddy]
+	}
+`
 
-export default ItemType
+export default () => [Item, RSBuddy]
