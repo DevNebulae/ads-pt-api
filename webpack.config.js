@@ -1,7 +1,7 @@
 const env = process.env.NODE_ENV
 
 switch (env) {
-  case "build":
+  case "production":
     module.exports = require("./webpack/build.config.js")(env)
     break
   case "dev":
