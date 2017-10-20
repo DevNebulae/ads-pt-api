@@ -4,8 +4,8 @@ import graphqlHTTP from "express-graphql"
 import { graphqlExpress, graphiqlExpress } from "graphql-server-express"
 import mongoose from "mongoose"
 import schema from "./graphql"
-import Item from "./db/item"
-import Update from "./db/update"
+import Items from "./db/item"
+import Updates from "./db/update"
 
 // Constants
 const CONFIG = require("./settings.yaml")
@@ -33,8 +33,8 @@ app.use(
       context: {
         loaders: {},
         models: {
-          items: Item,
-          updates: Update
+          items: Items,
+          updates: Updates
         }
       }
     }

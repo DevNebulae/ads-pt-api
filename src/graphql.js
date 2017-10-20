@@ -4,9 +4,9 @@ import { makeExecutableSchema } from "graphql-tools"
 
 const RuneScapeQuery = `
   type RuneScapeQuery {
-    items: [Item]
-    item(id: Int!): Item
-    updates: [Update]
+    items: [Items]
+    item(id: Int!): Items
+    updates: [Updates]
   }
 `
 
@@ -15,8 +15,6 @@ const SchemaDefinition = `
 		query: RuneScapeQuery
 	}
 `
-
-const fetchItems = () => Item.find({}, { rsbuddy: false })
 
 export default makeExecutableSchema({
   typeDefs: [SchemaDefinition, RuneScapeQuery, Item, Update],
