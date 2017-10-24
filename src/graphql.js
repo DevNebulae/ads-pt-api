@@ -4,9 +4,9 @@ import { makeExecutableSchema } from "graphql-tools"
 
 const RuneScapeQuery = `
   type RuneScapeQuery {
-    items: [Items]
-    item(id: Int!): Items
-    updates: [Updates]
+    items: [Item]
+    item(id: Int!): Item
+    updates: [Update]
   }
 `
 
