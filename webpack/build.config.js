@@ -4,11 +4,5 @@ const webpack = require("webpack")
 
 module.exports = env =>
   merge.smart(BASE_CONFIG, {
-    plugins: [
-      new webpack.DefinePlugin({
-        "process.env": {
-          NODE_ENV: env
-        }
-      })
-    ]
+    plugins: []
   })
