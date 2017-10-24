@@ -28,8 +28,10 @@ export default makeExecutableSchema({
         models.updates.find({}, { _id: false })
     },
     Item: {
-      rsbuddy: (root, args, { models }) =>
-        models.items.findOne({ id: root.id }, { _id: false, rsbuddy: true })
+      rsbuddy: ({ id }, args, { models }) =>
+        models.items
+          .findOne({ id }, { _id: false, rsbuddy: true })
+          .then(tx => tx.rsbuddy)
     }
   }
 })
