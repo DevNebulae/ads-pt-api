@@ -26,6 +26,10 @@ export default makeExecutableSchema({
         models.items.findOne({ id }, { _id: false, rsbuddy: false }),
       updates: (root, args, { models }) =>
         models.updates.find({}, { _id: false })
+    },
+    Item: {
+      rsbuddy: (root, args, { models }) =>
+        models.items.findOne({ id: root.id }, { _id: false, rsbuddy: true })
     }
   }
 })
