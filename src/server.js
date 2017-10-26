@@ -2,10 +2,8 @@ import bodyParser from "body-parser"
 import express from "express"
 import graphqlHTTP from "express-graphql"
 import { graphqlExpress, graphiqlExpress } from "graphql-server-express"
-import mongoose from "mongoose"
+import models from "./db"
 import schema from "./graphql"
-import Items from "./db/item"
-import Updates from "./db/update"
 
 // Constants
 const CONFIG = require("./settings.yaml")
@@ -21,10 +19,7 @@ app.use(
       schema,
       context: {
         loaders: {},
-        models: {
-          items: Items,
-          updates: Updates
-        }
+        models
       }
     }
   })
