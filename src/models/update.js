@@ -1,5 +1,5 @@
 export default (sequelize, DataTypes) => {
-  const Update = sequelize.define("update", {
+  const update = sequelize.define("update", {
     id: {
       defaultValue: DataTypes.UUIDV1,
       primaryKey: true,
@@ -13,5 +13,5 @@ export default (sequelize, DataTypes) => {
     }
   })
 
-  return Update
+  return update
 }

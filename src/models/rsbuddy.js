@@ -1,5 +1,5 @@
 export default (sequelize, DataTypes) => {
-  const RSBuddy = sequelize.define("rsbuddy", {
+  const rsbuddy = sequelize.define("rsbuddy", {
     id: {
       defaultValue: DataTypes.UUIDV1,
       primaryKey: true,
@@ -35,5 +35,5 @@ export default (sequelize, DataTypes) => {
     }
   })
 
-  return RSBuddy
+  return rsbuddy
 }
