@@ -1,12 +1,12 @@
 const RSBuddy = `
 	type RSBuddy {
 		ts: String
-		buyingPrice: Int
-		buyingCompleted: Int
-		sellingPrice: Int
-		sellingCompleted: Int
-		overallPrice: Int
-		overallCompleted: Int
+		buyingPrice: String
+		buyingCompleted: String
+		sellingPrice: String
+		sellingCompleted: String
+		overallPrice: String
+		overallCompleted: String
 	}
 `
 

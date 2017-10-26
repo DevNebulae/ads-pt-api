@@ -1,4 +1,5 @@
 import Item from "./graphql/types/item"
+import Update from "./graphql/types/update"
 import { makeExecutableSchema } from "graphql-tools"
 
 const RuneScapeQuery = `
@@ -15,8 +16,6 @@ const SchemaDefinition = `
 	}
 `
 
-const fetchItems = () => Item.find({}, { rsbuddy: false })
-
 export default makeExecutableSchema({
   typeDefs: [SchemaDefinition, RuneScapeQuery, Item, Update],
   resolvers: {
@@ -27,6 +26,12 @@ export default makeExecutableSchema({
         models.items.findOne({ id }, { _id: false, rsbuddy: false }),
       updates: (root, args, { models }) =>
         models.updates.find({}, { _id: false })
+    },
+    Item: {
+      rsbuddy: ({ id }, args, { models }) =>
+        models.items
+          .findOne({ id }, { _id: false, rsbuddy: true })
+          .then(tx => tx.rsbuddy)
     }
   }
 })

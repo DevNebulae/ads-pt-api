@@ -22,7 +22,7 @@ const item = new Schema({
   }
 })
 
-const Item = mongoose.model("Item", item)
+const Items = mongoose.model("Items", item)
 
 export { item }
-export default Item
+export default Items
