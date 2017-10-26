@@ -11,17 +11,6 @@ import Updates from "./db/update"
 const CONFIG = require("./settings.yaml")
 
 const app = express()
-
-mongoose.Promise = global.Promise
-mongoose.connect(
-  `mongodb://${CONFIG.mongodb.url}:${CONFIG.mongodb.port}/${CONFIG.mongodb
-    .database}`,
-  {
-    useMongoClient: true
-  }
-)
-mongoose.set("debug", true)
-
 app.use(
   "/graphql",
   bodyParser.json({
