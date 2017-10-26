@@ -4,6 +4,7 @@ const Update = `
 	# game, developer blogs and poll questions about future
 	# updates.
 	type Update {
+		id: String
 		title: String
 		date: String
 		content: String
