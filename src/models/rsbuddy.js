@@ -38,9 +38,11 @@ export default (sequelize, DataTypes) => {
     },
     {
       freezeTableName: true,
-      indexes: {
-        fields: ["item_id"]
-      }
+      indexes: [
+        {
+          fields: ["item_id"]
+        }
+      ]
     }
   )
 
