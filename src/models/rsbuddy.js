@@ -20,7 +20,7 @@ export default (sequelize, DataTypes) => {
         type: DataTypes.BIGINT
       },
       sellingPrice: {
-        field: "selling_pice",
+        field: "selling_price",
         type: DataTypes.BIGINT
       },
       sellingCompleted: {
@@ -36,7 +36,12 @@ export default (sequelize, DataTypes) => {
         type: DataTypes.BIGINT
       }
     },
-    { freezeTableName: true }
+    {
+      freezeTableName: true,
+      indexes: {
+        fields: ["item_id"]
+      }
+    }
   )
 
   return rsbuddy
