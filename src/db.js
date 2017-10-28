@@ -18,8 +18,7 @@ const sequelize = new Sequelize(
 
 const models = {
   item: sequelize.import("item", require("./models/item")),
-  rsbuddy: sequelize.import("rsbuddy", require("./models/rsbuddy")),
-  update: sequelize.import("update", require("./models/update"))
+  rsbuddy: sequelize.import("rsbuddy", require("./models/rsbuddy"))
 }
 
 Object.keys(models).forEach(modelName => {
