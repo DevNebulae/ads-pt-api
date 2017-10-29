@@ -1,3 +1,5 @@
+import Comment from "./graphql/types/comment"
+import CommentInput from "./graphql/input/comment"
 import Item from "./graphql/types/item"
 import Update from "./graphql/types/update"
 import UpdateInput from "./graphql/input/update"
@@ -13,6 +15,8 @@ const RuneScapeQuery = `
 
 const RuneScapeMutation = `
 	type RuneScapeMutation {
+		addComment(comment: CommentInput!): Comment
+		addComments(comments: [CommentInput!]!): [Comment]
 		addUpdate(update: UpdateInput!): Update
 	}
 `
@@ -29,8 +33,12 @@ export default makeExecutableSchema({
     SchemaDefinition,
     RuneScapeQuery,
     RuneScapeMutation,
+    // Individual types
+    Comment,
     Item,
     Update,
+    // Input types
+    CommentInput,
     UpdateInput
   ],
   resolvers: {
@@ -40,7 +48,11 @@ export default makeExecutableSchema({
       updates: (root, args, { models }) => models.update.find({})
     },
     RuneScapeMutation: {
-      addUpdate: (root, { update }, { models }) => models.update.create(update)
+      addUpdate: (root, { update }, { models }) => models.update.create(update),
+      addComment: (root, { comment }, { models }) =>
+        models.comment.create(comment),
+      addComments: (root, { comments }, { models }) =>
+        models.comment.insertMany(comments)
     },
     Item: {
       rsbuddy: ({ id }, args, { models }) =>

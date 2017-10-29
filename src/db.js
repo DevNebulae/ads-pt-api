@@ -1,3 +1,4 @@
+import Comments from "./mongoose/models/comment"
 import { CONFIG } from "./server"
 import mongoose from "mongoose"
 import Sequelize from "sequelize"
@@ -28,6 +29,7 @@ mongoose.Promise = global.Promise
 const models = {
   item: sequelize.import("item", require("./sequelize/models/item")),
   rsbuddy: sequelize.import("rsbuddy", require("./sequelize/models/rsbuddy")),
+  comment: Comments,
   update: Updates
 }
 
