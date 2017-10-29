@@ -1,5 +1,7 @@
-import Sequelize from "sequelize"
 import { CONFIG } from "./server"
+import mongoose from "mongoose"
+import Sequelize from "sequelize"
+import Updates from "./mongoose/models/update"
 
 const sequelize = new Sequelize(
   CONFIG.postgres.database,
@@ -16,9 +18,17 @@ const sequelize = new Sequelize(
   }
 )
 
+const mongo = mongoose.connect(
+  `mongodb://${CONFIG.mongodb.username}:${CONFIG.mongodb.password}@${CONFIG
+    .mongodb.host}:${CONFIG.mongodb.port}/${CONFIG.mongodb.database}`,
+  { useMongoClient: true }
+)
+mongoose.Promise = global.Promise
+
 const models = {
-  item: sequelize.import("item", require("./models/item")),
-  rsbuddy: sequelize.import("rsbuddy", require("./models/rsbuddy"))
+  item: sequelize.import("item", require("./sequelize/models/item")),
+  rsbuddy: sequelize.import("rsbuddy", require("./sequelize/models/rsbuddy")),
+  update: Updates
 }
 
 Object.keys(models).forEach(modelName => {
@@ -27,7 +37,5 @@ Object.keys(models).forEach(modelName => {
   }
 })
 
-models.sequelize = sequelize
-models.Sequelize = Sequelize
-
+export { mongo, sequelize, Sequelize }
 export default models

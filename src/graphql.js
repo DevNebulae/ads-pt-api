@@ -1,5 +1,6 @@
 import Item from "./graphql/types/item"
 import Update from "./graphql/types/update"
+import UpdateInput from "./graphql/input/update"
 import { makeExecutableSchema } from "graphql-tools"
 
 const RuneScapeQuery = `
@@ -10,19 +11,36 @@ const RuneScapeQuery = `
   }
 `
 
+const RuneScapeMutation = `
+	type RuneScapeMutation {
+		addUpdate(update: UpdateInput!): Update
+	}
+`
+
 const SchemaDefinition = `
 	schema {
 		query: RuneScapeQuery
+		mutation: RuneScapeMutation
 	}
 `
 
 export default makeExecutableSchema({
-  typeDefs: [SchemaDefinition, RuneScapeQuery, Item, Update],
+  typeDefs: [
+    SchemaDefinition,
+    RuneScapeQuery,
+    RuneScapeMutation,
+    Item,
+    Update,
+    UpdateInput
+  ],
   resolvers: {
     RuneScapeQuery: {
       items: (root, { ids }, { models }) => models.item.findAll(),
       item: (root, { id }, { models }) => models.item.findById(id),
-      updates: (root, args, { models }) => models.update.findAll()
+      updates: (root, args, { models }) => models.update.find({})
+    },
+    RuneScapeMutation: {
+      addUpdate: (root, { update }, { models }) => models.update.create(update)
     },
     Item: {
       rsbuddy: ({ id }, args, { models }) =>

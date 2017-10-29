@@ -15,7 +15,11 @@ const update = new Schema({
   }
 })
 
-const Updates = mongoose.model("Updates", update)
+update.virtual("id").get(function() {
+  return this._id
+})
+
+const Updates = mongoose.model("Update", update)
 
 export { update }
 export default Updates
