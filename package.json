@@ -8,7 +8,8 @@
   "scripts": {
     "build": "NODE_ENV=production webpack",
     "dev": "NODE_ENV=development webpack --config webpack.config.js",
-    "start": "NODE_ENV=production --max_old_space_size=4096 public/server.js"
+    "start":
+      "NODE_ENV=production node --max_old_space_size=4096 public/server.js"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
