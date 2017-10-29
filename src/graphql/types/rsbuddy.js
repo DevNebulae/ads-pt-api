@@ -1,4 +1,4 @@
-import gql from "grapql-tag"
+import gql from "graphql-tag"
 
 const RSBuddy = gql`
   # A representation of a Grand Exchange transaction
