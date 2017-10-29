@@ -22,7 +22,7 @@ export default makeExecutableSchema({
     RuneScapeQuery: {
       items: (root, { ids }, { models }) => models.item.findAll(),
       item: (root, { id }, { models }) => models.item.findById(id),
-      updates: (root, args, { models }) => models.update.findAll()
+      updates: (root, args, { models }) => models.update.find({})
     },
     Item: {
       rsbuddy: ({ id }, args, { models }) =>

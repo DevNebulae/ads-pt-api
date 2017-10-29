@@ -1,14 +1,14 @@
 import colors from "colors"
 import http from "http"
-import models from "./db"
+import models, { sequelize } from "./db"
 import { app, CONFIG } from "./server"
 
 async function start() {
   // Variables for hot reloading
   let currentApp = app
 
-  await models.sequelize.authenticate()
-  await models.sequelize.sync()
+  await sequelize.authenticate()
+  await sequelize.sync()
   console.info("Database has been initialized".cyan)
 
   const server = http.createServer(app)
