@@ -20,18 +20,13 @@ export default makeExecutableSchema({
   typeDefs: [SchemaDefinition, RuneScapeQuery, Item, Update],
   resolvers: {
     RuneScapeQuery: {
-      items: (root, { ids }, { models }) =>
-        models.items.find({}, { _id: false, rsbuddy: false }),
-      item: (root, { id }, { models }) =>
-        models.items.findOne({ id }, { _id: false, rsbuddy: false }),
-      updates: (root, args, { models }) =>
-        models.updates.find({}, { _id: false })
+      items: (root, { ids }, { models }) => models.item.findAll(),
+      item: (root, { id }, { models }) => models.item.findById(id),
+      updates: (root, args, { models }) => models.update.findAll()
     },
     Item: {
       rsbuddy: ({ id }, args, { models }) =>
-        models.items
-          .findOne({ id }, { _id: false, rsbuddy: true })
-          .then(tx => tx.rsbuddy)
+        models.rsbuddy.findAll({ where: { item_id: id } })
     }
   }
 })

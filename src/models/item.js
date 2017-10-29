@@ -1,5 +1,5 @@
 export default (sequelize, DataTypes) => {
-  const Item = sequelize.define("item", {
+  const item = sequelize.define("item", {
     id: {
       allowNull: false,
       primaryKey: true,
@@ -22,5 +22,5 @@ export default (sequelize, DataTypes) => {
     })
   }
 
-  return Item
+  return item
 }

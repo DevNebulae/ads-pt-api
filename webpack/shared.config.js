@@ -1,13 +1,25 @@
 const CleanWebpackPlugin = require("clean-webpack-plugin")
+const fs = require("fs")
 const path = require("path")
 const webpack = require("webpack")
 
 const dist = path.join(process.cwd(), "public")
 const src = path.join(process.cwd(), "src")
 
+var nodeModules = {}
+fs
+  .readdirSync("node_modules")
+  .filter(function(x) {
+    return [".bin"].indexOf(x) === -1
+  })
+  .forEach(function(mod) {
+    nodeModules[mod] = "commonjs " + mod
+  })
+
 //module.exports = { dist, src }
 module.exports = {
   entry: [path.join(src, "index.js")],
+  externals: nodeModules,
   module: {
     rules: [
       {
