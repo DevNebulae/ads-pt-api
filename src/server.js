@@ -12,7 +12,7 @@ const app = express()
 app.use(
   "/graphql",
   bodyParser.json({
-    limit: "15mb"
+    limit: CONFIG.max_api_call_size
   }),
   graphqlExpress(req => {
     return {
