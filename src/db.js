@@ -1,3 +1,4 @@
+import mongoose from "mongoose"
 import Sequelize from "sequelize"
 import { CONFIG } from "./server"
 
@@ -16,9 +17,15 @@ const sequelize = new Sequelize(
   }
 )
 
+const mongo = mongoose.connect(
+  `mongodb://${CONFIG.mongodb.username}:${CONFIG.mongodb.password}@${CONFIG
+    .mongodb.host}:${CONFIG.mongodb.port}`
+)
+
 const models = {
-  item: sequelize.import("item", require("./models/item")),
-  rsbuddy: sequelize.import("rsbuddy", require("./models/rsbuddy"))
+  item: sequelize.import("item", require("./sequelize/models/item")),
+  rsbuddy: sequelize.import("rsbuddy", require("./sequelize/models/rsbuddy")),
+  update: require("./mongoose/models/update")
 }
 
 Object.keys(models).forEach(modelName => {
@@ -27,7 +34,5 @@ Object.keys(models).forEach(modelName => {
   }
 })
 
-models.sequelize = sequelize
-models.Sequelize = Sequelize
-
+export { mongo, sequelize, Sequelize }
 export default models
