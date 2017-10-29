@@ -11,7 +11,6 @@ const update = new Schema({
   },
   content: {
     type: String,
-    index: true,
     required: true
   }
 })
@@ -20,7 +19,7 @@ update.virtual("id").get(function() {
   return this._id
 })
 
-const Updates = mongoose.model("updates", update)
+const Updates = mongoose.model("Update", update)
 
 export { update }
 export default Updates

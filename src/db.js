@@ -1,6 +1,7 @@
+import { CONFIG } from "./server"
 import mongoose from "mongoose"
 import Sequelize from "sequelize"
-import { CONFIG } from "./server"
+import Updates from "./mongoose/models/update"
 
 const sequelize = new Sequelize(
   CONFIG.postgres.database,
@@ -19,13 +20,15 @@ const sequelize = new Sequelize(
 
 const mongo = mongoose.connect(
   `mongodb://${CONFIG.mongodb.username}:${CONFIG.mongodb.password}@${CONFIG
-    .mongodb.host}:${CONFIG.mongodb.port}`
+    .mongodb.host}:${CONFIG.mongodb.port}/${CONFIG.mongodb.database}`,
+  { useMongoClient: true }
 )
+mongoose.Promise = global.Promise
 
 const models = {
   item: sequelize.import("item", require("./sequelize/models/item")),
   rsbuddy: sequelize.import("rsbuddy", require("./sequelize/models/rsbuddy")),
-  update: require("./mongoose/models/update")
+  update: Updates
 }
 
 Object.keys(models).forEach(modelName => {
