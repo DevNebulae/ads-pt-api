@@ -1,0 +1,6 @@
+type Comment {
+  id: String!
+  timestamp: String
+  author: String
+  content: String
+}
