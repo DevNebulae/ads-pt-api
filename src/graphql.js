@@ -1,7 +1,7 @@
-import Comment from "./graphql/types/comment"
+import Comment from "./graphql/types/comment.gql"
 import CommentInput from "./graphql/input/comment"
-import Item from "./graphql/types/item"
-import Update from "./graphql/types/update"
+import Item from "./graphql/types/item.gql"
+import Update from "./graphql/types/update.gql"
 import UpdateInput from "./graphql/input/update"
 import { makeExecutableSchema } from "graphql-tools"
 
