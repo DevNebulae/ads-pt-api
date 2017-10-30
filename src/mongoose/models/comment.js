@@ -11,7 +11,13 @@ const comment = new Schema({
   },
   content: {
     type: String,
-    required: true
+    validate: {
+      validator: function(v) {
+        return typeof v === "string"
+      },
+      message:
+        "The comment does not seem to be a type of string. I got the value {VALUE} when I at least expected an empty string."
+    }
   }
 })
 
