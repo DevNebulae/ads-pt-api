@@ -7,8 +7,9 @@ export default (sequelize, DataTypes) => {
         primaryKey: true,
         type: DataTypes.UUID
       },
-      ts: {
+      timestamp: {
         allowNull: false,
+        field: "ts",
         type: DataTypes.BIGINT
       },
       buyingPrice: {

@@ -1,8 +1,8 @@
 import Comment from "./graphql/types/comment.gql"
-import CommentInput from "./graphql/input/comment"
+import CommentInput from "./graphql/input/comment.gql"
 import Item from "./graphql/types/item.gql"
 import Update from "./graphql/types/update.gql"
-import UpdateInput from "./graphql/input/update"
+import UpdateInput from "./graphql/input/update.gql"
 import { makeExecutableSchema } from "graphql-tools"
 
 const RuneScapeQuery = `

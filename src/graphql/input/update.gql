@@ -1,0 +1,5 @@
+input UpdateInput {
+  title: String!
+  date: String!
+  content: String!
+}
