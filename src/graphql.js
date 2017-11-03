@@ -9,7 +9,7 @@ const RuneScapeQuery = `
   type RuneScapeQuery {
 		comments(filter: String, options: String): [Comment]
 		comment(id: String!): Comment
-    items: [Item]
+    items(ids: [Int!]): [Item]
     item(id: Int!): Item
     updates: [Update]
   }
@@ -53,7 +53,10 @@ export default makeExecutableSchema({
         else return models.comment.find({})
       },
       comment: (root, { id }, { models }) => models.comment.find({ _id: id }),
-      items: (root, { ids }, { models }) => models.item.findAll(),
+      items: (root, { ids }, { models }) => {
+        if (ids) return models.item.findAll({ where: { id: ids } })
+        else return models.item.findAll()
+      },
       item: (root, { id }, { models }) => models.item.findById(id),
       updates: (root, args, { models }) => models.update.find({})
     },
