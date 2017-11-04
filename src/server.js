@@ -1,4 +1,5 @@
 import bodyParser from "body-parser"
+import cors from "cors"
 import express from "express"
 import graphqlHTTP from "express-graphql"
 import { graphqlExpress, graphiqlExpress } from "graphql-server-express"
@@ -9,6 +10,7 @@ import schema from "./graphql"
 const CONFIG = require("./settings.yaml")
 
 const app = express()
+app.use(cors())
 app.use(
   "/graphql",
   bodyParser.json({
