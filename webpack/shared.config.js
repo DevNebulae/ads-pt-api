@@ -51,7 +51,6 @@ module.exports = {
     new CleanWebpackPlugin(dist, {
       root: process.cwd()
     }),
-    new webpack.IgnorePlugin(/vertx/),
     new webpack.NamedModulesPlugin(),
     new webpack.NoEmitOnErrorsPlugin()
   ],
