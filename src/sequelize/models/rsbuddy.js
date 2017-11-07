@@ -10,7 +10,7 @@ export default (sequelize, DataTypes) => {
       timestamp: {
         allowNull: false,
         field: "ts",
-        type: DataTypes.BIGINT
+        type: DataTypes.DATE
       },
       buyingPrice: {
         field: "buying_price",
