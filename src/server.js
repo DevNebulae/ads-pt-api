@@ -3,7 +3,7 @@ import cors from "cors"
 import express from "express"
 import graphqlHTTP from "express-graphql"
 import { graphqlExpress, graphiqlExpress } from "graphql-server-express"
-import models from "./db"
+import models, { sequelize } from "./db"
 import schema from "./graphql"
 
 // Constants
@@ -21,7 +21,8 @@ app.use(
       schema,
       context: {
         loaders: {},
-        models
+        models,
+        sequelize
       }
     }
   })
