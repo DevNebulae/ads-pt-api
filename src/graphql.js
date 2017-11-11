@@ -69,7 +69,10 @@ export default makeExecutableSchema({
     },
     Item: {
       rsbuddy: ({ id }, args, { models }) =>
-        models.rsbuddy.findAll({ where: { item_id: id }, order: '"ts" ASC' })
+        models.rsbuddy.findAll({
+          where: { item_id: id },
+          order: [["ts", "ASC"]]
+        })
     }
   }
 })
