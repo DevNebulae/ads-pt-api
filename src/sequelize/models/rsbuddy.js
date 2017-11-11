@@ -24,6 +24,10 @@ export default (sequelize, DataTypes) => {
         field: "selling_price",
         type: DataTypes.BIGINT
       },
+      sellingPriceDelta: {
+        field: "selling_price_delta",
+        type: DataTypes.DOUBLE
+      },
       sellingCompleted: {
         field: "selling_completed",
         type: DataTypes.BIGINT

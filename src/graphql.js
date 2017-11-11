@@ -1,7 +1,6 @@
 import Comment from "./graphql/types/comment.gql"
 import CommentInput from "./graphql/input/comment.gql"
 import Item from "./graphql/types/item.gql"
-import ItemDelta from "./graphql/types/item-delta.gql"
 import Update from "./graphql/types/update.gql"
 import UpdateInput from "./graphql/input/update.gql"
 import { makeExecutableSchema } from "graphql-tools"
@@ -12,7 +11,6 @@ const RuneScapeQuery = `
 		comment(id: String!): Comment
     items(ids: [Int!]): [Item]
 		item(id: Int!): Item
-		itemDelta(id: Int!): ItemDelta
     updates: [Update]
   }
 `
@@ -40,7 +38,6 @@ export default makeExecutableSchema({
     // Individual types
     Comment,
     Item,
-    ItemDelta,
     Update,
     // Input types
     CommentInput,
@@ -61,9 +58,6 @@ export default makeExecutableSchema({
         else return models.item.findAll()
       },
       item: (root, { id }, { models }) => models.item.findById(id),
-      itemDelta: (root, { id }, { models }) => ({
-        id
-      }),
       updates: (root, args, { models }) => models.update.find({})
     },
     RuneScapeMutation: {
@@ -76,19 +70,6 @@ export default makeExecutableSchema({
     Item: {
       rsbuddy: ({ id }, args, { models }) =>
         models.rsbuddy.findAll({ where: { item_id: id } })
-    },
-    ItemDelta: {
-      sellingDelta: ({ id }, args, { sequelize }) =>
-        sequelize.query(
-          `
-				SELECT new, old, (new - old)::float / old AS delta
-				FROM (
-					SELECT item_id, selling_price AS new, LAG(selling_price) OVER (PARTITION BY item_id) AS old
-					FROM rsbuddy
-				) rsbuddy
-				WHERE item_id = ${id}`,
-          { type: sequelize.QueryTypes.SELECT }
-        )
     }
   }
 })
