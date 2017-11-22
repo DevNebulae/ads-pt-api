@@ -1,0 +1,18 @@
+type RuneScapeQuery {
+  comments(filter: String, options: String): [Comment]
+  comment(id: String!): Comment
+  items(ids: [Int!]): [Item]
+  item(id: Int!): Item
+  updates: [Update]
+}
+
+type RuneScapeMutation {
+  addComment(comment: CommentInput!): Comment
+  addComments(comments: [CommentInput!]!): [Comment]
+  addUpdate(update: UpdateInput!): Update
+}
+
+schema {
+  query: RuneScapeQuery
+  mutation: RuneScapeMutation
+}

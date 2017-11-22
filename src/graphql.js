@@ -1,6 +1,7 @@
 import Comment from "./graphql/types/comment.gql"
 import CommentInput from "./graphql/input/comment.gql"
 import Item from "./graphql/types/item.gql"
+import Root from "./graphql/types/root.gql"
 import Update from "./graphql/types/update.gql"
 import UpdateInput from "./graphql/input/update.gql"
 import moment from "moment"
@@ -9,36 +10,9 @@ import { parseModifier } from "./resampling/utils"
 import { sequelize } from "./db"
 import { GraphQLError } from "graphql/error/GraphQLError"
 
-const RuneScapeQuery = `
-  type RuneScapeQuery {
-		comments(filter: String, options: String): [Comment]
-		comment(id: String!): Comment
-    items(ids: [Int!]): [Item]
-		item(id: Int!): Item
-    updates: [Update]
-  }
-`
-
-const RuneScapeMutation = `
-	type RuneScapeMutation {
-		addComment(comment: CommentInput!): Comment
-		addComments(comments: [CommentInput!]!): [Comment]
-		addUpdate(update: UpdateInput!): Update
-	}
-`
-
-const SchemaDefinition = `
-	schema {
-		query: RuneScapeQuery
-		mutation: RuneScapeMutation
-	}
-`
-
 export default makeExecutableSchema({
   typeDefs: [
-    SchemaDefinition,
-    RuneScapeQuery,
-    RuneScapeMutation,
+    Root,
     // Individual types
     Comment,
     Item,
