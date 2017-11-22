@@ -7,7 +7,7 @@
 WITH resampled AS (
   SELECT
     row_number() OVER () as rnum,
-    to_timestamp(floor(extract(epoch from rsbuddy.ts) / :frameSize) * :frameSize) AT TIME ZONE 'UTC' AS ts_interval,
+    to_timestamp((floor(extract(epoch from rsbuddy.ts) / :frameSize) * :frameSize)) AT TIME ZONE 'UTC' AS ts_interval,
     item_id,
     AVG(buying_price)::int AS buying_price,
     SUM(buying_completed)::int AS buying_completed,
