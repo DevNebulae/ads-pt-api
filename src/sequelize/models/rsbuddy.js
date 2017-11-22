@@ -16,6 +16,10 @@ export default (sequelize, DataTypes) => {
         field: "buying_price",
         type: DataTypes.BIGINT
       },
+      buyingPriceDelta: {
+        field: "buying_price_delta",
+        type: DataTypes.DOUBLE
+      },
       buyingCompleted: {
         field: "buying_completed",
         type: DataTypes.BIGINT
@@ -24,6 +28,10 @@ export default (sequelize, DataTypes) => {
         field: "selling_price",
         type: DataTypes.BIGINT
       },
+      sellingPriceDelta: {
+        field: "selling_price_delta",
+        type: DataTypes.DOUBLE
+      },
       sellingCompleted: {
         field: "selling_completed",
         type: DataTypes.BIGINT
@@ -31,6 +39,10 @@ export default (sequelize, DataTypes) => {
       overallPrice: {
         field: "overall_price",
         type: DataTypes.BIGINT
+      },
+      overallPriceDelta: {
+        field: "overall_price_delta",
+        type: DataTypes.DOUBLE
       },
       overallCompleted: {
         field: "overall_completed",
@@ -41,7 +53,12 @@ export default (sequelize, DataTypes) => {
       freezeTableName: true,
       indexes: [
         {
-          fields: ["item_id", "ts"]
+          fields: ["item_id", "ts"],
+          unique: true
+        },
+        {
+          fields: ["ts"],
+          method: "BTREE"
         }
       ]
     }

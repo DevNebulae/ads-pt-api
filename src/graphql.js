@@ -10,7 +10,7 @@ const RuneScapeQuery = `
 		comments(filter: String, options: String): [Comment]
 		comment(id: String!): Comment
     items(ids: [Int!]): [Item]
-    item(id: Int!): Item
+		item(id: Int!): Item
     updates: [Update]
   }
 `
@@ -69,7 +69,10 @@ export default makeExecutableSchema({
     },
     Item: {
       rsbuddy: ({ id }, args, { models }) =>
-        models.rsbuddy.findAll({ where: { item_id: id } })
+        models.rsbuddy.findAll({
+          where: { item_id: id },
+          order: [["ts", "ASC"]]
+        })
     }
   }
 })

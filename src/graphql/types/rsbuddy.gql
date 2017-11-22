@@ -10,9 +10,12 @@
 type RSBuddy {
   timestamp: String!
   buyingPrice: String
+  buyingPriceDelta: Float
   buyingCompleted: String
   sellingPrice: String
+  sellingPriceDelta: Float
   sellingCompleted: String
   overallPrice: String
+  overallPriceDelta: Float
   overallCompleted: String
 }
