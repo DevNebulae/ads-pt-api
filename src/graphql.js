@@ -3,7 +3,11 @@ import CommentInput from "./graphql/input/comment.gql"
 import Item from "./graphql/types/item.gql"
 import Update from "./graphql/types/update.gql"
 import UpdateInput from "./graphql/input/update.gql"
+import moment from "moment"
 import { makeExecutableSchema } from "graphql-tools"
+import { parseModifier } from "./resampling/utils"
+import { sequelize } from "./db"
+import { GraphQLError } from "graphql/error/GraphQLError"
 
 const RuneScapeQuery = `
   type RuneScapeQuery {
@@ -68,11 +72,42 @@ export default makeExecutableSchema({
         models.comment.insertMany(comments)
     },
     Item: {
-      rsbuddy: ({ id }, args, { models }) =>
-        models.rsbuddy.findAll({
-          where: { item_id: id },
-          order: [["ts", "ASC"]]
-        })
+      rsbuddy: ({ id }, { resample, start = null, end = null }, { models }) => {
+        if (
+          (start && !moment(start, moment.ISO_8601).isvalid()) ||
+          (end && !moment(end, moment.ISO_8601).isvalid())
+        )
+          throw new GraphQLError(
+            "Start and end dates must be specified in the ISO 8601 format."
+          )
+
+        if (resample) {
+          let frameSize
+
+          try {
+            frameSize = parseModifier(resample)
+          } catch (e) {
+            console.log(e)
+            throw new GraphQLError(e)
+          }
+
+          return sequelize.query(require("./sql/rsbuddy-resample.sql"), {
+            mapToModel: true,
+            model: models.rsbuddy,
+            replacements: {
+              endDate: null,
+              frameSize,
+              itemId: id,
+              startDate: null
+            },
+            type: sequelize.QueryTypes.SELECT
+          })
+        } else
+          return models.rsbuddy.findAll({
+            where: { item_id: id },
+            order: [["ts", "ASC"]]
+          })
+      }
     }
   }
 })
