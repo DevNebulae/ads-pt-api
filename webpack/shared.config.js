@@ -37,6 +37,10 @@ module.exports = {
         ]
       },
       {
+        test: /\.sql/,
+        use: ["raw-loader"]
+      },
+      {
         test: /\.y(a?)ml$/,
         use: ["json-loader", "yaml-loader"]
       }
