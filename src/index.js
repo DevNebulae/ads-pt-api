@@ -1,3 +1,4 @@
+import "babel-polyfill"
 import colors from "colors"
 import http from "http"
 import models, { sequelize } from "./db"
