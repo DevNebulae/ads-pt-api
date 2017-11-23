@@ -1,9 +1,6 @@
 -- The with clause calculates all averages, sums and the
 -- timeframe in which the records fall. The timeframes are
 -- indicated in seconds.
---
--- If you want to filter on multiple item ids, you need to
--- change the where clause to match that.
 WITH resampled AS (
   SELECT
     row_number() OVER () as rnum,
@@ -16,12 +13,27 @@ WITH resampled AS (
     AVG(overall_price)::int AS overall_price,
     SUM(overall_completed)::int AS overall_completed
   FROM rsbuddy
-  WHERE item_id = :itemId AND ts BETWEEN COALESCE(:startDate, rsbuddy.ts) AND COALESCE(:endDate, rsbuddy.ts)
-  GROUP BY ts_interval, item_id
-  ORDER BY ts_interval
+  WHERE rsbuddy.item_id = :itemId
+  GROUP BY ts_interval, item_id;
+),
+lagged AS (
+  -- Select the row number, which is the unique id given to
+  -- each row of the aggregates, partition by the item id so
+  -- that the `lag` function does not grab data from other
+  -- items and order by row number so that the order of
+  -- records does not get mixed up.
+  SELECT
+    rnum,
+    LAG(buying_price) OVER (PARTITION BY item_id ORDER BY rnum) as buying_price_old,
+    LAG(buying_completed) OVER (PARTITION BY item_id ORDER BY rnum) as buying_completed_old,
+    LAG(selling_price) OVER (PARTITION BY item_id ORDER BY rnum) as selling_price_old,
+    LAG(selling_completed) OVER (PARTITION BY item_id ORDER BY rnum) as selling_completed_old,
+    LAG(overall_price) OVER (PARTITION BY item_id ORDER BY rnum) as overall_price_old,
+    LAG(overall_completed) OVER (PARTITION BY item_id ORDER BY rnum) as overall_completed_old
+  FROM resampled;
 )
 SELECT
-  ts_interval AS ts,
+  ts_interval AS 'ts',
   item_id,
   buying_price,
   (buying_price - buying_price_old)::float / buying_price_old AS buying_price_delta,
@@ -35,22 +47,7 @@ SELECT
   (overall_price - overall_price_old)::float / overall_price_old AS overall_price_delta,
   overall_completed,
   (overall_completed - overall_completed_old)::float / overall_completed_old AS overall_completed_delta
-FROM (
-  -- Select the row number, which is the unique id given to
-  -- each row of the aggregates, partition by the item id so
-  -- that the `lag` function does not grab data from other
-  -- items and order by row number so that the order of
-  -- records does not get mixed up.
-  SELECT
-    rnum,
-    lag(buying_price) OVER (PARTITION BY item_id ORDER BY rnum) as buying_price_old,
-    lag(buying_completed) OVER (PARTITION BY item_id ORDER BY rnum) as buying_completed_old,
-    lag(selling_price) OVER (PARTITION BY item_id ORDER BY rnum) as selling_price_old,
-    lag(selling_completed) OVER (PARTITION BY item_id ORDER BY rnum) as selling_completed_old,
-    lag(overall_price) OVER (PARTITION BY item_id ORDER BY rnum) as overall_price_old,
-    lag(overall_completed) OVER (PARTITION BY item_id ORDER BY rnum) as overall_completed_old
-  FROM resampled
-) lagged
+FROM lagged
 -- Lastly, join the subquery and the main query together to
 -- avoid the n^2 problem.
 INNER JOIN resampled ON lagged.rnum = resampled.rnum
