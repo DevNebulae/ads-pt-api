@@ -48,8 +48,8 @@ export default makeExecutableSchema({
     Item: {
       rsbuddy: ({ id }, { resample, start = null, end = null }, { models }) => {
         if (
-          (start && !moment(start, moment.ISO_8601).isvalid()) ||
-          (end && !moment(end, moment.ISO_8601).isvalid())
+          (start && !moment(start, moment.ISO_8601).isValid()) ||
+          (end && !moment(end, moment.ISO_8601).isValid())
         )
           throw new GraphQLError(
             "Start and end dates must be specified in the ISO 8601 format."
@@ -57,6 +57,14 @@ export default makeExecutableSchema({
 
         if (resample) {
           let frameSize
+          const startDate =
+            start === null
+              ? null
+              : moment(start, moment.ISO_8601).format("YYYY-MM-DD HH:mm:ss")
+          const endDate =
+            end === null
+              ? null
+              : moment(end, moment.ISO_8601).format("YYYY-MM-DD HH:mm:ss")
 
           try {
             frameSize = parseModifier(resample)
@@ -69,10 +77,10 @@ export default makeExecutableSchema({
             mapToModel: true,
             model: models.rsbuddy,
             replacements: {
-              endDate: null,
+              end: endDate,
               frameSize,
               itemId: id,
-              startDate: null
+              start: startDate
             },
             type: sequelize.QueryTypes.SELECT
           })
