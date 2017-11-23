@@ -1,6 +1,11 @@
--- The with clause calculates all averages, sums and the
--- timeframe in which the records fall. The timeframes are
--- indicated in seconds.
+-- The way the time frames are calculated is as follows: the
+-- epoch gets divided by a number of seconds, which results
+-- in a floating point number. This numbers gets rounded
+-- down, which results in an integer. Until the integer
+-- rolls over, all records will be grouped with the floored
+-- integer. The number gets multiplied afterwards by the
+-- number it was divided by and this results in a uniform
+-- timestamp.
 WITH resampled AS (
   SELECT
     row_number() OVER () as rnum,
