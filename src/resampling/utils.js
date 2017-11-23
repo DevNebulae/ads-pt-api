@@ -11,7 +11,7 @@ export const parseModifier = timeFrame => {
     h: 3600,
     d: 3600 * 24,
     w: 3600 * 24 * 7,
-    m: 3600 * 24 * 7 * 30
+    m: 3600 * 24 * 30
   }
 
   const regex = /(\d{0,2})([d,h,w,m])/i
