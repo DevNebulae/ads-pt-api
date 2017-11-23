@@ -8,5 +8,5 @@ type Item {
   id: Int!
   name: String
   store: Int
-  rsbuddy: [RSBuddy]
+  rsbuddy(resample: String, start: String, end: String): [RSBuddy]
 }

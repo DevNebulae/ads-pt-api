@@ -12,10 +12,13 @@ type RSBuddy {
   buyingPrice: String
   buyingPriceDelta: Float
   buyingCompleted: String
+  buyingCompletedDelta: Float
   sellingPrice: String
   sellingPriceDelta: Float
   sellingCompleted: String
+  sellingCompletedDelta: Float
   overallPrice: String
   overallPriceDelta: Float
   overallCompleted: String
+  overallCompletedDelta: Float
 }

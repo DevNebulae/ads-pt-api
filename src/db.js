@@ -20,8 +20,9 @@ const sequelize = new Sequelize(
 )
 
 const mongo = mongoose.connect(
-  `mongodb://${CONFIG.mongodb.username}:${CONFIG.mongodb.password}@${CONFIG
-    .mongodb.host}:${CONFIG.mongodb.port}/${CONFIG.mongodb.database}`,
+  `mongodb://${CONFIG.mongodb.username}:${CONFIG.mongodb.password}@${
+    CONFIG.mongodb.host
+  }:${CONFIG.mongodb.port}/${CONFIG.mongodb.database}`,
   { useMongoClient: true }
 )
 mongoose.Promise = global.Promise

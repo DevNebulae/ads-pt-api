@@ -1,6 +1,6 @@
-import mongoose, { Schema } from "mongoose"
+import mongoose from "mongoose"
 
-const comment = new Schema({
+const comment = mongoose.Schema({
   timestamp: {
     type: Number,
     required: true

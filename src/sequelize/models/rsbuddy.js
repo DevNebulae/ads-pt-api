@@ -24,6 +24,10 @@ export default (sequelize, DataTypes) => {
         field: "buying_completed",
         type: DataTypes.BIGINT
       },
+      buyingCompletedDelta: {
+        field: "buying_completed_delta",
+        type: DataTypes.DOUBLE
+      },
       sellingPrice: {
         field: "selling_price",
         type: DataTypes.BIGINT
@@ -36,6 +40,10 @@ export default (sequelize, DataTypes) => {
         field: "selling_completed",
         type: DataTypes.BIGINT
       },
+      sellingCompletedDelta: {
+        field: "selling_completed_delta",
+        type: DataTypes.DOUBLE
+      },
       overallPrice: {
         field: "overall_price",
         type: DataTypes.BIGINT
@@ -47,6 +55,10 @@ export default (sequelize, DataTypes) => {
       overallCompleted: {
         field: "overall_completed",
         type: DataTypes.BIGINT
+      },
+      overallCompletedDelta: {
+        field: "overall_completed_delta",
+        type: DataTypes.DOUBLE
       }
     },
     {

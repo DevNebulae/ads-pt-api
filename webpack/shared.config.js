@@ -18,7 +18,9 @@ fs
 
 //module.exports = { dist, src }
 module.exports = {
-  entry: [path.join(src, "index.js")],
+  entry: {
+    app: [path.join(src, "index.js")]
+  },
   externals: nodeModules,
   module: {
     rules: [
@@ -30,11 +32,11 @@ module.exports = {
       {
         exclude: /node_modules/,
         test: /\.js?$/,
-        use: [
-          {
-            loader: "babel-loader"
-          }
-        ]
+        use: ["babel-loader"]
+      },
+      {
+        test: /\.sql/,
+        use: ["raw-loader"]
       },
       {
         test: /\.y(a?)ml$/,
@@ -46,7 +48,7 @@ module.exports = {
     __filename: true,
     __dirname: true
   },
-  output: { path: dist, filename: "server.js" },
+  output: { path: dist, filename: "[name].js" },
   plugins: [
     new CleanWebpackPlugin(dist, {
       root: process.cwd()
