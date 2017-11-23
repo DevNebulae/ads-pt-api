@@ -20,6 +20,7 @@ WITH resampled AS (
   FROM rsbuddy
   WHERE rsbuddy.item_id = :itemId AND ts BETWEEN COALESCE(:start, ts) AND COALESCE(:end, ts)
   GROUP BY ts_interval, item_id
+  ORDER BY ts_interval
 ),
 lagged AS (
   -- Select the row number, which is the unique id given to
