@@ -18,7 +18,7 @@ WITH resampled AS (
     AVG(overall_price) AS overall_price,
     SUM(overall_completed) AS overall_completed
   FROM rsbuddy
-  WHERE rsbuddy.item_id = 383
+  WHERE rsbuddy.item_id = :itemId AND ts BETWEEN COALESCE(:start, ts) AND COALESCE(:end, ts)
   GROUP BY ts_interval, item_id
 ),
 lagged AS (
@@ -55,4 +55,4 @@ FROM lagged
 -- Lastly, join the subquery and the main query together to
 -- avoid the n^2 problem.
 INNER JOIN resampled ON lagged.rnum = resampled.rnum
-ORDER BY item_id, resampled.rnum;
+ORDER BY ts, resampled.rnum;
